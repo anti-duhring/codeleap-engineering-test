@@ -7,10 +7,23 @@ import { useState } from "react";
 
 const PostHeader = (props: Props) => {
     const [isLoading, setIsLoading] = useState(false)
+
     const handleDelete = async(e: any) => {
         setIsLoading(true)
-        await props.deletePost(props.item.id)
+        await Promise.resolve(props.onDeletePost(props.item))
         setIsLoading(false)
+    }
+
+    const handleEdit = async(e: any) => {
+        await Promise.resolve(props.onEditPost(props.item))
+    }
+
+    const buttonDefaultProps = {
+        size: {
+            width: '30px',
+            height: '30px'
+        },
+        disabled: isLoading
     }
 
     return (
@@ -21,9 +34,12 @@ const PostHeader = (props: Props) => {
                     <IconButton
                         icon={<DeleteForeverIcon />}
                         onClick={handleDelete}
+                        {...buttonDefaultProps}
                     />
                     <IconButton
                         icon={<EditIcon />}
+                        onClick={handleEdit}
+                        {...buttonDefaultProps}
                     />
                 </PostButtons>
             }

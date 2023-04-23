@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from 'react';
 
 export default function Login() {
+    const [showModal, setShowModal] = useState(true)
     const [username, setUsername] = useState('')
     const dispatch = useAppDispatch()
     const { isLogged } = useAppSelector(state => state.user)
@@ -18,6 +19,8 @@ export default function Login() {
         e.preventDefault();
         dispatch(loginUserAction(username));
     }
+
+    const toggleModal = () => setShowModal(!showModal)
 
     useEffect(() => {
         if(isLogged) {
@@ -33,8 +36,10 @@ export default function Login() {
             <main>
                 <Modal
                     title='Welcome to CodeLeap network!'
-                    primaryButton="ENTER"
-                    onClickPrimaryButton={handleClickButton}
+                    primaryButtonTitle="ENTER"
+                    onConfirm={handleClickButton}
+                    showModal={showModal}
+                    toggleModal={toggleModal}
                     showButton
                 >
                     <>

@@ -6,7 +6,8 @@ export type TPost = {
     username: string,
     created_datetime: Date,
     title: string,
-    content: string
+    content: string,
+    [key: string]: string | Date | number
 }
 
 export type TResponsePosts = {
@@ -47,4 +48,16 @@ export const deletePost = async(id: number) => {
     } catch(err) {
         throw err
     }
+}
+
+export const editPost = async(id: number, postData: TPostData) => {
+    try {
+        const req = await axios.patch(`/careers/${id}/`, postData)
+        const data = req.data
+
+        return data
+    } catch(err) {
+        throw err
+    }
+
 }

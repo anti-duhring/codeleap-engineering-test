@@ -1,10 +1,9 @@
-import styled from 'styled-components';
-import FormItem from '../Form/FormItem';
-import Paper from '../Paper';
-import Button from '../Form/Button';
 import { useAppSelector } from '@/redux/hooks';
 import { useState } from 'react';
-import usePost from '@/hooks/usePost';
+import styled from 'styled-components';
+import Button from '../Form/Button';
+import FormItem from '../Form/FormItem';
+import Paper from '../Paper';
 
 export type TPostData = {
     username: string,
@@ -13,9 +12,13 @@ export type TPostData = {
     [key: string]: string
 }
 
-const CreatePostForm = () => {
+type Props = {
+    title?: string;
+    onSubmit?: (postData: TPostData) => any;
+}
+
+const CreatePostForm = (props: Props) => {
     const { username } = useAppSelector(state => state.user.userData)
-    const { createPost } = usePost()
 
     const [postData, setPostData] = useState<TPostData>({
         username,
@@ -32,11 +35,17 @@ const CreatePostForm = () => {
         })
     }
 
-    const handleSubmitPost = () => createPost(postData)
+    const handleSubmit = (e: any) => {
+        e.preventDefault()
+        
+        if(!props.onSubmit) return 
+
+        return props.onSubmit(postData)
+    }
 
     return (
         <Paper>
-            <Title>What’s on your mind?</Title>
+            <Title>{props.title}</Title>
             <FormItem
                 label='Title'
                 type='text'
@@ -54,7 +63,8 @@ const CreatePostForm = () => {
             <ButtonContainer>
                 <Button
                     title='Create'
-                    onClick={handleSubmitPost}
+                    onClick={handleSubmit}
+                    disabled={!postData.title || !postData.content}
                 />
             </ButtonContainer>
         </Paper>

@@ -3,7 +3,8 @@ import {
     TPost, 
     createPost as create, 
     getPosts as get, 
-    deletePost as deleteP 
+    deletePost as deleteP,
+    editPost as edit
 } from '@/services/api/post'
 import { useState, useEffect } from 'react'
 
@@ -34,7 +35,7 @@ const usePost = () => {
 
         setCount(count)
         setNextAndPreviousPage({ next, previous })
-        setPosts(results)
+        setPosts([...results])
     }
 
     const deletePost = async(id: number) => {
@@ -42,11 +43,17 @@ const usePost = () => {
         await getPosts()
     }
 
+    const editPost = async(id: number, data: TPostData) => {
+        await edit(id, data)
+        await getPosts()
+    }
+
     return {
         posts,
         createPost,
         getPosts,
-        deletePost
+        deletePost,
+        editPost
     }
 }
 

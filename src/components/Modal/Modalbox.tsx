@@ -1,14 +1,17 @@
 import styled from 'styled-components';
-import { Props } from '.';
 import Buttons from './Buttons';
+import { useContext } from 'react'
+import { ModalContext } from '.';
 
-const Modalbox = (props: Props) => {
+const Modalbox = () => {
+    const {  title, content } = useContext(ModalContext)
+     
     return (
         <Container>
-            <Title>{props.title}</Title>
+            <Title>{title}</Title>
             <Content>
-                {props.children}
-                <Buttons {...props} />
+                {content}
+                <Buttons />
             </Content>
         </Container>
     )

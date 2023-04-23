@@ -1,11 +1,21 @@
-import CreatePostForm from '@/components/CreatePostForm';
+import CreatePostForm, { TPostData } from '@/components/CreatePostForm';
 import PostList from '@/components/PostList';
-import { useAppSelector } from '@/redux/hooks';
+import usePost from '@/hooks/usePost';
 import withAuth from '@/services/withAuth/withAuth';
 import Head from 'next/head';
+import { useState } from 'react';
 
  function Home() {
-  const { userData } = useAppSelector(state => state.user)
+  const { 
+      posts,
+      deletePost,
+      editPost,
+      createPost
+  } = usePost()
+
+  const onSubmit = async(data: TPostData) => {
+    await createPost(data)
+  }
 
   return (
     <>
@@ -15,8 +25,15 @@ import Head from 'next/head';
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main>
-        <CreatePostForm />
-        <PostList />
+        <CreatePostForm
+          title="What's on your mind?"
+          onSubmit={onSubmit}
+        />
+        <PostList
+          posts={posts}
+          deletePost={deletePost}
+          editPost={editPost}
+        />
       </main>
     </>
   )

@@ -1,33 +1,14 @@
 import styled from "styled-components";
-
+import { ButtonBgColor, ButtonBgColorHover, ButtonBorderColor, ButtonColor, ButtonColorHover } from "./constants";
 
 type Props = {
     title?: String;
     disabled?: boolean;
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
-    type?: 'primary' | 'secondary' | 'error'
+    type?: ButtonTypes
 }
 
-enum ButtonTypeBgColor {
-    primary = '#7695EC',
-    secondary = 'white',
-    error = ' #FF5151',
-    disabled = 'gray',
-}
-
-enum ButtonTypeColor {
-    primary = 'white',
-    error = 'white',
-    secondary = 'black',
-    disabled = 'gray',
-}
-
-enum ButtonTypeBorderColor {
-    primary = '#7695EC',
-    error = '#FF5151',
-    secondary = '#999999',
-    disabled = 'gray',
-}
+export type ButtonTypes = 'primary' | 'secondary' | 'error' | 'success'
 
 const Button = ({
     title,
@@ -40,7 +21,7 @@ const Button = ({
         <ButtonBtn
             disabled={disabled}
             onClick={onClick}
-            colorType={type}
+            colorType={disabled ? 'disabled' : type}
         >
             {title}
         </ButtonBtn>
@@ -51,19 +32,30 @@ export default Button
 
 const ButtonBtn = styled.button<{ colorType: string }>`
     background-color: ${
-        (props: any) => props.disabled ? 
-            ButtonTypeBgColor.disabled : 
-            ButtonTypeBgColor[props.colorType as keyof typeof ButtonTypeBgColor]
+        props => ButtonBgColor[props.colorType as keyof typeof ButtonBgColor]
     };
     color: ${
-        (props: any) => props.disabled ? 
-            ButtonTypeColor.disabled : 
-            ButtonTypeColor[props.colorType as keyof typeof ButtonTypeColor]
+        props => ButtonColor[props.colorType as keyof typeof ButtonColor]
     };
+    border: 1px solid ${props => ButtonBorderColor[props.colorType as keyof typeof ButtonBorderColor]};
+    opacity: ${props => props.disabled ? 0.5 : 1};
     font-weight: 700;
-    border: 1px solid ${(props: any) => ButtonTypeBorderColor[props.colorType as keyof typeof ButtonTypeBorderColor]};
     padding: 8px;
     border-radius: 8px;
-    min-width: 6rem;
+    min-width: 8rem;
     cursor: pointer;
+    transition: all .3s;
+
+    &:hover {
+        background-color: ${
+            props => ButtonBgColorHover[props.colorType as keyof typeof ButtonBgColorHover]
+        };
+        color: ${
+            props => ButtonColorHover[props.colorType as keyof typeof ButtonColorHover]
+        };
+    }
+
+    &:active {
+        opacity: .3;
+    }
 `

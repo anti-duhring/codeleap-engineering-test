@@ -20,21 +20,31 @@ const FormItem = (props: Props) => {
 
     return (
         <Container>
-            <label htmlFor={props.label}>{props.label}</label>
-            {props.type == 'text' && 
-                <InputText
-                    {...inputProps}
-                />
-            }
-            {props.type == 'textarea' &&
-                <Textarea
-                    {...inputProps}
-                />
-            }
+            <label htmlFor={props.label}>
+                {props.label}
+            </label>
+            <InputContainer>
+                {props.type == 'text' && 
+                    <InputText
+                        {...inputProps}
+                    />
+                }
+                {props.type == 'textarea' &&
+                    <Textarea
+                        {...inputProps}
+                    />
+                }
+            </InputContainer>
         </Container>
     )
 }
 
 export default FormItem
 
-const Container = styled.div``
+const Container = styled.div`
+    margin-bottom: 1rem;
+`
+
+const InputContainer = styled.div`
+    padding-top: .5rem;
+`

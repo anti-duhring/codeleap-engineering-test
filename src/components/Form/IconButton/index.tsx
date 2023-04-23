@@ -4,12 +4,18 @@ type Props = {
     icon: React.ReactElement;
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
     disabled?: boolean;
+    size?: {
+        width: number | string;
+        height: number | string;
+    }
 }
 const IconButton = (props: Props) => {
+
     return (
         <Button
             onClick={props.onClick}
             disabled={props.disabled}
+            size={props.size}
         >
             {props.icon}
         </Button>
@@ -18,15 +24,25 @@ const IconButton = (props: Props) => {
 
 export default IconButton
 
-const Button = styled.button`
+const Button = styled.button<{ 
+        size?: { width: number | string, height: number | string }
+    }>`
     border: none;
-    background: transparent;
+    background-color: transparent;
+    border-radius: 50%;
+    padding: .2rem;
     color: white;
-    transition: all .1s;
+    transition: all .3s;
     cursor: pointer;
-    opacity: ${(props: any) => props.disabled ? '.5' : '1'};;
+    opacity: ${props => props.disabled ? .3 : 1};
+    width: ${props => props.size?.width ?? "auto"};
+    height: ${props => props.size?.height ?? "auto"};
 
     &:active {
         opacity: .5;
+    }
+
+    &:hover {
+        background-color: rgba(0,0,0,.1);
     }
 `

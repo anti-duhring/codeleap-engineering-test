@@ -28,6 +28,8 @@ const TextArea = styled.textarea`
     border-radius: 8px;
     padding: 8px 11px 8px 11px;
     width: 100%;
+    min-height: 7rem;
+    resize: none;
 
     &::placeholder {
         color: #CCCCCC;

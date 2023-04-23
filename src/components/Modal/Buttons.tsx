@@ -1,21 +1,41 @@
 import styled from "styled-components"
-import { Props } from "."
+import { ModalContext } from "."
 import Button from "../Form/Button"
+import { useContext } from "react"
 
-const Buttons = (props: Props) => {
-    if(!props.showButton) return null
+const Buttons = () => {
+    const {
+        showButton,
+        primaryButtonTitle,
+        primaryButtonType,
+        secondaryButtonTitle,
+        secondaryButtonType,
+        primaryButtonDisabled,
+        secondaryButtonDisabled,
+        onConfirm,
+        onCancel,
+        toggleModal
+    } = useContext(ModalContext)
+
+    if(!showButton) return null
 
     return (
         <Container>
             <Button
-                title={props.secondaryButton ?? 'Cancel'}
-                type='secondary'
-                onClick={(e) => props.onClickPrimaryButton ? props.onClickPrimaryButton(e) : null}
+                title={secondaryButtonTitle ?? 'Cancel'}
+                type={secondaryButtonType ?? 'secondary'}
+                onClick={(e) => onCancel ? 
+                    (onCancel(e), toggleModal()) : toggleModal()
+                }
+                disabled={secondaryButtonDisabled}
             />
             <Button
-                title={props.primaryButton ?? 'Confirm'}
-                type='error'
-                onClick={(e) => props.onClickPrimaryButton ? props.onClickPrimaryButton(e) : null}
+                title={primaryButtonTitle ?? 'Confirm'}
+                type={primaryButtonType ?? 'primary'}
+                onClick={(e) => onConfirm ? 
+                    (onConfirm(e), toggleModal()) : toggleModal()
+                }
+                disabled={primaryButtonDisabled}
             />
         </Container>
     )

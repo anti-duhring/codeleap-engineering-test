@@ -7,6 +7,8 @@ export type Props = {
     item: TPost;
     isAuthor: boolean;
     deletePost: (id: number) => Promise<void>;
+    onDeletePost: (params: any) => void;
+    onEditPost: (params: any) => void;
 }
 const PostItem = (props: Props) => {
     return (
