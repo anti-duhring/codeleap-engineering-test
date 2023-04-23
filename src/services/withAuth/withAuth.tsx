@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { RootState } from "@/redux/store";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useAppSelector } from '@/redux/hooks';
 
 const withAuth = (Component: any) => {
     const ProtectedComponent = (props: any) => {
-        const { isLogged } = useSelector((state: RootState) => state.user)
+        const { isLogged } = useAppSelector((state: RootState) => state.user)
         const router = useRouter()
 
         useEffect(() => {
