@@ -33,8 +33,8 @@ export default function Login() {
             <main>
                 <Modal
                     title='Welcome to CodeLeap network!'
-                    buttonTitle="ENTER"
-                    onClickButton={handleClickButton}
+                    primaryButton="ENTER"
+                    onClickPrimaryButton={handleClickButton}
                     showButton
                 >
                     <>

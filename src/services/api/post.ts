@@ -1,4 +1,5 @@
-import axios from 'axios'
+import { TPostData } from "@/components/CreatePostForm"
+import { axios } from "./config"
 
 export type TPost = {
     id: number
@@ -16,8 +17,34 @@ export type TResponsePosts = {
 }
 
 export const getPosts = async() => {
-    const req = await axios.get('https://dev.codeleap.co.uk/careers/');
-    const data = req.data
+    try {
+        const req = await axios.get('/careers/');
+        const data = req.data
 
-    return data as TResponsePosts
+        return data as TResponsePosts
+    } catch(err) {
+        throw err
+    }
+}
+
+export const createPost = async(postData: TPostData) => {
+    try {
+        const req = await axios.post('/careers/', postData)
+        const data = req.data
+
+        return data
+    } catch(err) {
+        throw err
+    }
+}
+
+export const deletePost = async(id: number) => {
+    try {
+        const req = await axios.delete(`/careers/${id}/`)
+        const data = req.data
+
+        return data
+    } catch(err) {
+        throw err
+    }
 }

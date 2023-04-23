@@ -1,19 +1,32 @@
 import usePost from '@/hooks/usePost';
 import styled from 'styled-components';
+import PostItem from './PostItem';
+import { useAppSelector } from '@/redux/hooks';
+import { RootState } from '@/redux/store';
+import Modal from '../Modal';
 
 const PostList = () => {
-    const { posts } = usePost()
+    const { username } = useAppSelector((state: RootState) => state.user.userData)
+    const { 
+        posts,
+        deletePost 
+    } = usePost()
 
     return (
         <Container>
-            <ul>
-            {posts.map(i => 
-                <li key={i.id}>
-                    {i.content} <br />
-                    By {i.username}
-                </li>
+            {posts.map(item => 
+                <PostItem 
+                    key={item.id} 
+                    item={item}
+                    isAuthor={item.username == username}  
+                    deletePost={deletePost}
+                />
             )}
-            </ul>
+            <Modal
+                 title='Are you sure you want to delete this item?'
+                 primaryButton='Delete'
+                 showButton
+            />
         </Container>
     )
 }

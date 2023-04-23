@@ -8,8 +8,14 @@ const Buttons = (props: Props) => {
     return (
         <Container>
             <Button
-                title={props.buttonTitle ?? 'Confirm'}
-                onClick={(e) => props.onClickButton ? props.onClickButton(e) : null}
+                title={props.secondaryButton ?? 'Cancel'}
+                type='secondary'
+                onClick={(e) => props.onClickPrimaryButton ? props.onClickPrimaryButton(e) : null}
+            />
+            <Button
+                title={props.primaryButton ?? 'Confirm'}
+                type='error'
+                onClick={(e) => props.onClickPrimaryButton ? props.onClickPrimaryButton(e) : null}
             />
         </Container>
     )
@@ -21,4 +27,5 @@ const Container = styled.div`
     margin-top: 1rem;
     display: flex;
     justify-content: flex-end;
+    gap: 1rem;
 `

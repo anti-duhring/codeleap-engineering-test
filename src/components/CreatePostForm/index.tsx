@@ -4,6 +4,7 @@ import Paper from '../Paper';
 import Button from '../Form/Button';
 import { useAppSelector } from '@/redux/hooks';
 import { useState } from 'react';
+import usePost from '@/hooks/usePost';
 
 export type TPostData = {
     username: string,
@@ -14,6 +15,7 @@ export type TPostData = {
 
 const CreatePostForm = () => {
     const { username } = useAppSelector(state => state.user.userData)
+    const { createPost } = usePost()
 
     const [postData, setPostData] = useState<TPostData>({
         username,
@@ -30,7 +32,7 @@ const CreatePostForm = () => {
         })
     }
 
-    const handleSubmitPost = () => console.log(postData)
+    const handleSubmitPost = () => createPost(postData)
 
     return (
         <Paper>
