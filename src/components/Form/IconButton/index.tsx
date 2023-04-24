@@ -8,15 +8,12 @@ type Props = {
         width: number | string;
         height: number | string;
     }
+    color?: string;
 }
 const IconButton = (props: Props) => {
 
     return (
-        <Button
-            onClick={props.onClick}
-            disabled={props.disabled}
-            size={props.size}
-        >
+        <Button {...props}>
             {props.icon}
         </Button>
     )
@@ -31,7 +28,7 @@ const Button = styled.button<{
     background-color: transparent;
     border-radius: 50%;
     padding: .2rem;
-    color: white;
+    color: ${props => props.color ?? "#fff"};
     transition: all .3s;
     cursor: pointer;
     opacity: ${props => props.disabled ? .3 : 1};

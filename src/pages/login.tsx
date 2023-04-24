@@ -1,4 +1,4 @@
-import { loginUserAction } from "@/actions/user/loginUserAction";
+import { loginUserAction } from "@/actions/userActions";
 import InputText from "@/components/Form/InputText";
 import Modal from "@/components/Modal";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";

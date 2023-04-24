@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 import Modalbox from "./Modalbox";
 import { createContext, useState } from "react";
 import { ButtonTypes } from "../Form/Button";
@@ -41,6 +41,14 @@ const Modal = (props: Props) => {
 
 export default Modal
 
+const fadein = keyframes`
+    from {
+        opacity: 0;
+    } to {
+        opacity: 1;
+    }
+`
+
 const Overlay = styled.div<{ showModal: boolean }>`
     position: fixed;
     top: 0;
@@ -52,4 +60,7 @@ const Overlay = styled.div<{ showModal: boolean }>`
     justify-content: center;
     align-items: center;
     background: rgba(0, 0, 0, 0.5);
+    animation-name: ${props => props.showModal && fadein};
+    animation-duration: .3s;
+    animation-timing-function: ease-out;
 `

@@ -6,7 +6,7 @@ type Props =  {
     label: string;
     type: 'text' | 'textarea';
     placeholder?: string;
-    value: string;
+    value?: string | null;
     onChangeValue: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
 }
 
@@ -14,7 +14,7 @@ const FormItem = (props: Props) => {
     const inputProps = {
         placeholder: props.placeholder,
         name: props.label,
-        value: props.value,
+        value: props.value ?? '',
         onChange: props.onChangeValue
     }
 

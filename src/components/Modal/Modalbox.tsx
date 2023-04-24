@@ -1,13 +1,17 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Buttons from './Buttons';
 import { useContext } from 'react'
 import { ModalContext } from '.';
 
 const Modalbox = () => {
-    const {  title, content } = useContext(ModalContext)
+    const {  
+        showModal,
+        title, 
+        content 
+    } = useContext(ModalContext)
      
     return (
-        <Container>
+        <Container showModal={showModal}>
             <Title>{title}</Title>
             <Content>
                 {content}
@@ -19,7 +23,18 @@ const Modalbox = () => {
 
 export default Modalbox
 
-const Container = styled.div`
+const popup = keyframes`
+    from {
+        transform: scale(0); 
+        opacity: 0;
+    }
+    to {
+        transform: scale(1); 
+        opacity: 1;
+    }
+`;
+
+const Container = styled.div<{showModal: boolean}>`
     position: relative;
     z-index: 999;
     background-color: white;
@@ -27,6 +42,10 @@ const Container = styled.div`
     border-radius: 16px;
     padding: 24px;
     margin: 1rem;
+    width: 90%;
+    animation-name: ${props => props.showModal && popup};
+    animation-duration: .3s;
+    animation-timing-function: ease-out;
 `
 
 const Title = styled.h2`

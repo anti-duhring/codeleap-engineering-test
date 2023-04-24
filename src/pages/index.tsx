@@ -1,20 +1,21 @@
+import RefreshPosts from '@/components/RefreshPosts';
 import CreatePostForm, { TPostData } from '@/components/CreatePostForm';
 import PostList from '@/components/PostList';
 import usePost from '@/hooks/usePost';
 import withAuth from '@/services/withAuth/withAuth';
 import Head from 'next/head';
-import { useState } from 'react';
 
  function Home() {
-  const { 
-      posts,
-      deletePost,
-      editPost,
-      createPost
-  } = usePost()
+  const postEvents = usePost({
+    fetchInitialData: true
+  })
 
   const onSubmit = async(data: TPostData) => {
-    await createPost(data)
+    await postEvents.createPost(data)
+  }
+
+  const onRefresh = async() => {
+    await postEvents.getFreshPosts()
   }
 
   return (
@@ -29,11 +30,8 @@ import { useState } from 'react';
           title="What's on your mind?"
           onSubmit={onSubmit}
         />
-        <PostList
-          posts={posts}
-          deletePost={deletePost}
-          editPost={editPost}
-        />
+        <RefreshPosts onRefresh={onRefresh} />
+        <PostList {...postEvents} />
       </main>
     </>
   )

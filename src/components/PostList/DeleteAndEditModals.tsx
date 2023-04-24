@@ -5,31 +5,31 @@ import { useState, useEffect } from "react";
 import { ActionType, actionTypeEnum } from ".";
 
 type Props = {
-    clearPostData: () => void;
-    selectedPostData: TPost
+    selectedPostData: TPost | null
     handlePostDataChange: (params: any) => void;
     onConfirm: () => void;
+    onCancel: () => void;
     actionType: ActionType;
 }
 
 const DeleteAndEditModals = (props: Props) => {
     const [showModal, setShowModal] =  useState(false)
 
-    const isTitleOrContentEmpty = !props.selectedPostData.title || !props.selectedPostData.content
+    const isTitleOrContentEmpty = !props.selectedPostData?.title || !props.selectedPostData?.content
 
     const toggleModal = () => setShowModal(!showModal)
 
     useEffect(() => {
-        if(props.selectedPostData.id == -1) return
+        if(!props.selectedPostData) return
 
         toggleModal()
 
-    },[props.selectedPostData.id])
+    },[props.selectedPostData?.id])
 
     const defaultModalProps = {
         toggleModal,
         onConfirm: props.onConfirm,
-        onCancel: props.clearPostData,
+        onCancel: props.onCancel,
         primaryButtonDisabled: isTitleOrContentEmpty,
         showButton: true
     }
@@ -53,13 +53,13 @@ const DeleteAndEditModals = (props: Props) => {
             <FormItem
                 label='Title'
                 type='text'
-                value={props.selectedPostData.title}
+                value={props.selectedPostData?.title}
                 onChangeValue={props.handlePostDataChange}
             />
             <FormItem
                 label='Content'
                 type='textarea'
-                value={props.selectedPostData.content}
+                value={props.selectedPostData?.content}
                 onChangeValue={props.handlePostDataChange}
             />
         </Modal>

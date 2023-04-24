@@ -39,8 +39,17 @@ const CreatePostForm = (props: Props) => {
         e.preventDefault()
         
         if(!props.onSubmit) return 
-
+        
+        clearPostData()
         return props.onSubmit(postData)
+    }
+
+    const clearPostData = () => {
+        setPostData({
+            username,
+            title: '',
+            content: ''
+        })
     }
 
     return (

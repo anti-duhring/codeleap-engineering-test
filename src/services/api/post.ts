@@ -17,9 +17,9 @@ export type TResponsePosts = {
     results: TPost[]
 }
 
-export const getPosts = async() => {
+export const getPosts = async(url?: string) => {
     try {
-        const req = await axios.get('/careers/');
+        const req = await axios.get(url ?? '/careers/');
         const data = req.data
 
         return data as TResponsePosts
